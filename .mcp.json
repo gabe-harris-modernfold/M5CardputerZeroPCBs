@@ -1,0 +1,35 @@
+{
+  "mcpServers": {
+    "kicad": {
+      "type": "stdio",
+      "command": "${USERPROFILE}\\.local\\bin\\kicad-mcp-pro.exe",
+      "args": [],
+      "env": {
+        "KICAD_MCP_PROJECT_DIR": "C:\\SourceCode\\M5CardputerZeroPCBs",
+        "KICAD_MCP_PROFILE": "full",
+        "KICAD_MCP_OPERATING_MODE": "write",
+        "KICAD_MCP_TRANSPORT": "stdio"
+      }
+    },
+    "kicad-mixelpixx": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["C:\\SourceCode\\KiCAD-MCP-Server\\dist\\index.js"],
+      "env": {
+        "PYTHONPATH": "C:\\Program Files\\KiCad\\10.0\\bin\\Lib\\site-packages",
+        "KICAD_PYTHON": "C:\\Program Files\\KiCad\\10.0\\bin\\python.exe",
+        "KICAD_MCP_OPERATING_MODE": "write",
+        "NODE_ENV": "production",
+        "LOG_LEVEL": "info"
+      }
+    },
+    "gerber-check": {
+      "type": "stdio",
+      "command": "uv",
+      "args": ["run", "--directory", "C:\\SourceCode\\M5CardputerZeroPCBs\\tools\\gerber_check", "python", "server.py"],
+      "env": {
+        "KICAD_CLI": "C:\\Program Files\\KiCad\\10.0\\bin\\kicad-cli.exe"
+      }
+    }
+  }
+}
