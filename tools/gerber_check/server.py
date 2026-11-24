@@ -155,7 +155,8 @@ def export_for_fab(board_file: str, profile: str = "pcbway_standard", out_dir: s
         text += f"\n- {fab_zip}{note}" + (f"\n- {stencil_zip}" if stencil_zip else "")
     sheet = out / "order_sheet.md"
     sheet.write_text(osh.build(rep, arep, gerb, fab_zip, stencil_zip), encoding="utf-8")
-    text += f"\n- {sheet} (values for PCBWay's order form, plus the pre-payment checklist)"
+    maker = "JLCPCB" if gc.PROFILES[profile].get("manufacturer_key") == "jlcpcb" else "PCBWay"
+    text += f"\n- {sheet} (values for {maker}'s order form, plus the pre-payment checklist)"
     return text
 
 
