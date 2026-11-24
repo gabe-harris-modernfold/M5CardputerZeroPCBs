@@ -10,3 +10,6 @@ _gerber_check/
 
 # Local Claude Code settings
 .claude/settings.local.json
+
+# Third-party reference drawings (not ours to redistribute)
+docs/*.pdf
