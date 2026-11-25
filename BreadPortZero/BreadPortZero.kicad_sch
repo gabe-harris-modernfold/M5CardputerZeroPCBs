@@ -7,7 +7,7 @@
 	(title_block
 		(title "BreadPortZero")
 		(date "2026-11-25")
-		(rev "0.4")
+		(rev "0.5")
 		(comment 1 "I2C / UART / analog breakout cap for M5Stack CardputerZero")
 	)
 	(lib_symbols
@@ -2585,6 +2585,237 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "BreadPortZero:TPS2116DRL"
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "U"
+				(at -7.62 8.89 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "TPS2116"
+				(at 0 8.89 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Package_TO_SOT_SMD:SOT-583-8"
+				(at 0 11.43 0)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps2116.pdf"
+				(at 0 0 0)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "TI 2.5 A power mux, 1.6-5.5 V, priority (VIN1 while PR1 > 1 V) or manual switchover, break-before-make, reverse current blocking, SOT-583 (DRL)"
+				(at 0 0 0)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "power mux priority switchover oring"
+				(at 0 0 0)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "SOT?583*"
+				(at 0 0 0)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "TPS2116DRL_0_1"
+				(rectangle
+					(start -7.62 7.62)
+					(end 7.62 -7.62)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "TPS2116DRL_1_1"
+				(pin power_in line
+					(at 0 -10.16 90)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_out line
+					(at 10.16 5.08 180)
+					(length 2.54)
+					(name "VOUT"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -10.16 5.08 0)
+					(length 2.54)
+					(name "VIN1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -10.16 0 0)
+					(length 2.54)
+					(name "PR1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -10.16 2.54 0)
+					(length 2.54)
+					(name "MODE"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -10.16 -5.08 0)
+					(length 2.54)
+					(name "VIN2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 10.16 2.54 180)
+					(length 2.54)
+					(name "VOUT"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin open_collector line
+					(at 10.16 -5.08 180)
+					(length 2.54)
+					(name "ST"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "BreadPortZero:TLV62569DBV"
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -2938,181 +3169,6 @@
 					(at 0 -3.81 90)
 					(length 1.27)
 					(name "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
-		(symbol "Device:D_Schottky"
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 1.016)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "D"
-				(at 0 2.54 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "D_Schottky"
-				(at 0 -2.54 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" "Schottky diode"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_keywords" "diode Schottky"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "D_Schottky_0_1"
-				(polyline
-					(pts
-						(xy -1.905 0.635)
-						(xy -1.905 1.27)
-						(xy -1.27 1.27)
-						(xy -1.27 -1.27)
-						(xy -0.635 -1.27)
-						(xy -0.635 -0.635)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 1.27 1.27)
-						(xy 1.27 -1.27)
-						(xy -1.27 0)
-						(xy 1.27 1.27)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 1.27 0)
-						(xy -1.27 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "D_Schottky_1_1"
-				(pin passive line
-					(at -3.81 0 0)
-					(length 2.54)
-					(name "K"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 3.81 0 180)
-					(length 2.54)
-					(name "A"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -10285,7 +10341,7 @@
 		)
 		(uuid "23f472f5-4b91-5e95-a14d-1c00812577e5")
 	)
-	(label "+5V_SW"
+	(label "USB_SW"
 		(at 251.46 73.66 0)
 		(effects
 			(font
@@ -10294,6 +10350,239 @@
 			(justify left bottom)
 		)
 		(uuid "eeca402a-d731-523d-8403-50471669152d")
+	)
+	(symbol
+		(lib_id "BreadPortZero:TPS2116DRL")
+		(at 152.4 20.32 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f4f68f92-df84-5489-bb95-251328a8f942")
+		(property "Reference" "U8"
+			(at 152.4 14.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TPS2116"
+			(at 152.4 26.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-583-8"
+			(at 152.4 20.32 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 152.4 20.32 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 152.4 20.32 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C3235557"
+			(at 152.4 20.32 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "TPS2116DRLR"
+			(at 152.4 20.32 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "0728b86f-1e28-50e2-9d81-95e609732ed4")
+		)
+		(pin "2"
+			(uuid "1cc035fb-3ae6-54cb-94b7-410c5a5aade7")
+		)
+		(pin "3"
+			(uuid "bb87b9ca-9a21-50e3-9439-11a8951c0883")
+		)
+		(pin "4"
+			(uuid "462e613e-01c6-5705-abe5-88e4d048b8b6")
+		)
+		(pin "5"
+			(uuid "71dabda4-b6dc-5d94-8c37-0d715ae93906")
+		)
+		(pin "6"
+			(uuid "ca1054b9-9951-5b7c-aa72-7481ba3035ca")
+		)
+		(pin "7"
+			(uuid "8b8c4593-8b40-5671-b661-e2ee0da5ba98")
+		)
+		(pin "8"
+			(uuid "b98ca38d-41b0-505f-861d-bf6751966400")
+		)
+		(instances
+			(project "BreadPortZero"
+				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
+					(reference "U8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 152.4 30.48 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(uuid "b9c95918-d4bf-5857-833c-626b95d6d2f2")
+		(property "Reference" "#PWR33"
+			(at 152.4 24.48 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 152.4 36.48 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 152.4 30.48 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 152.4 30.48 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 152.4 30.48 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "31b43bfd-5b70-54f0-8289-1d5570b0b747")
+		)
+		(instances
+			(project "BreadPortZero"
+				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
+					(reference "#PWR33")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "+5V_SW"
+		(at 162.56 15.24 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "541e7ce2-19be-5ad3-8241-32d03f49abdf")
+	)
+	(label "USB_SW"
+		(at 142.24 15.24 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "da006db2-9edb-5b51-a8d2-a532ed74a8aa")
+	)
+	(label "PR1"
+		(at 142.24 20.32 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "56976863-705d-520f-b3c2-e728027f4930")
+	)
+	(label "USB_SW"
+		(at 142.24 17.78 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "1d8522ee-99cd-5c0d-9732-592cd3189c1f")
+	)
+	(label "U1_OUT"
+		(at 142.24 25.4 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "a4ad1a51-e09e-5078-a9b2-d3ca4cdb2396")
+	)
+	(label "+5V_SW"
+		(at 162.56 17.78 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "74b58284-2233-54b6-8820-7a9f4e9ed8be")
+	)
+	(no_connect
+		(at 162.56 25.4)
+		(uuid "7d79dbf5-85d4-5716-a97c-cf5e694b32fc")
 	)
 	(symbol
 		(lib_id "BreadPortZero:TLV62569DBV")
@@ -10407,8 +10696,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "b9c95918-d4bf-5857-833c-626b95d6d2f2")
-		(property "Reference" "#PWR33"
+		(uuid "3b6f2db9-e861-55e8-abc1-1b30afaec734")
+		(property "Reference" "#PWR34"
 			(at 203.2 37.18 0)
 			(hide yes)
 			(effects
@@ -10454,12 +10743,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "31b43bfd-5b70-54f0-8289-1d5570b0b747")
+			(uuid "a9316c16-8581-5f4c-b29f-219ff23c7906")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR33")
+					(reference "#PWR34")
 					(unit 1)
 				)
 			)
@@ -10598,8 +10887,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "3b6f2db9-e861-55e8-abc1-1b30afaec734")
-		(property "Reference" "#PWR34"
+		(uuid "606e7a0a-4bf2-5753-8c47-a9aa73634540")
+		(property "Reference" "#PWR35"
 			(at 220.98 25.75 0)
 			(hide yes)
 			(effects
@@ -10645,121 +10934,16 @@
 			)
 		)
 		(pin "1"
-			(uuid "a9316c16-8581-5f4c-b29f-219ff23c7906")
+			(uuid "c9372f6b-451b-55e8-aa38-2268abf998e3")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR34")
+					(reference "#PWR35")
 					(unit 1)
 				)
 			)
 		)
-	)
-	(symbol
-		(lib_id "Device:D_Schottky")
-		(at 152.4 22.86 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "634d4080-6b86-54de-8bf4-6a024b60affd")
-		(property "Reference" "D3"
-			(at 152.4 16.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "B5819W"
-			(at 152.4 28.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Diode_SMD:D_SOD-123"
-			(at 152.4 22.86 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 152.4 22.86 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 152.4 22.86 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C8598"
-			(at 152.4 22.86 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" "B5819W SL"
-			(at 152.4 22.86 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "43a907f7-63f9-551f-af79-bac0abe19dc2")
-		)
-		(pin "2"
-			(uuid "6876918e-a463-57af-88c5-f9c9e11882fe")
-		)
-		(instances
-			(project "BreadPortZero"
-				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "D3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(label "+5V_SW"
-		(at 148.59 22.86 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "f916a798-ddbc-5b05-8430-63d44932c06f")
-	)
-	(label "U1_OUT"
-		(at 156.21 22.86 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "48dd47d1-de93-5f0b-bd2e-24302dada148")
 	)
 	(symbol
 		(lib_id "Device:D_Zener")
@@ -10864,8 +11048,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "606e7a0a-4bf2-5753-8c47-a9aa73634540")
-		(property "Reference" "#PWR35"
+		(uuid "492f7a28-bf07-50d3-934b-b3979cf73d32")
+		(property "Reference" "#PWR36"
 			(at 207.01 70.2 0)
 			(hide yes)
 			(effects
@@ -10911,12 +11095,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "c9372f6b-451b-55e8-aa38-2268abf998e3")
+			(uuid "3d323d27-08de-55f9-98a0-3a91440934a5")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR35")
+					(reference "#PWR36")
 					(unit 1)
 				)
 			)
@@ -11061,8 +11245,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "492f7a28-bf07-50d3-934b-b3979cf73d32")
-		(property "Reference" "#PWR36"
+		(uuid "a6d88f50-6e8a-5c5e-a3ae-02019792295b")
+		(property "Reference" "#PWR37"
 			(at 365.76 170.53 0)
 			(hide yes)
 			(effects
@@ -11108,12 +11292,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "3d323d27-08de-55f9-98a0-3a91440934a5")
+			(uuid "b0719e1d-4f3f-5495-93c4-6dbd1925d6c5")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR36")
+					(reference "#PWR37")
 					(unit 1)
 				)
 			)
@@ -11147,8 +11331,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "a6d88f50-6e8a-5c5e-a3ae-02019792295b")
-		(property "Reference" "#PWR37"
+		(uuid "95246af1-571c-57b9-b58d-c0f9d32b33a5")
+		(property "Reference" "#PWR38"
 			(at 365.76 175.61 0)
 			(hide yes)
 			(effects
@@ -11194,12 +11378,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "b0719e1d-4f3f-5495-93c4-6dbd1925d6c5")
+			(uuid "3caf8727-57b0-5916-b519-44081072992a")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR37")
+					(reference "#PWR38")
 					(unit 1)
 				)
 			)
@@ -11233,8 +11417,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "95246af1-571c-57b9-b58d-c0f9d32b33a5")
-		(property "Reference" "#PWR38"
+		(uuid "d67a309c-b38b-5203-b921-29c1228f9f1a")
+		(property "Reference" "#PWR39"
 			(at 365.76 180.69 0)
 			(hide yes)
 			(effects
@@ -11280,12 +11464,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "3caf8727-57b0-5916-b519-44081072992a")
+			(uuid "9e02ed8c-759c-55b7-984f-fac838ea6f07")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR38")
+					(reference "#PWR39")
 					(unit 1)
 				)
 			)
@@ -11339,8 +11523,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "d67a309c-b38b-5203-b921-29c1228f9f1a")
-		(property "Reference" "#PWR39"
+		(uuid "929250fe-8f79-5282-9e59-e5adbee1ac05")
+		(property "Reference" "#PWR40"
 			(at 375.92 162.91 0)
 			(hide yes)
 			(effects
@@ -11386,12 +11570,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "9e02ed8c-759c-55b7-984f-fac838ea6f07")
+			(uuid "cb6489da-6173-51b4-be89-0475ac3acd1e")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR39")
+					(reference "#PWR40")
 					(unit 1)
 				)
 			)
@@ -11405,8 +11589,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "929250fe-8f79-5282-9e59-e5adbee1ac05")
-		(property "Reference" "#PWR40"
+		(uuid "c46674d2-4625-567e-9553-ab791e0e83a5")
+		(property "Reference" "#PWR41"
 			(at 375.92 193.39 0)
 			(hide yes)
 			(effects
@@ -11452,12 +11636,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "cb6489da-6173-51b4-be89-0475ac3acd1e")
+			(uuid "d47dd63b-5d81-5105-82cc-581f9f6158f6")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR40")
+					(reference "#PWR41")
 					(unit 1)
 				)
 			)
@@ -11566,8 +11750,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "c46674d2-4625-567e-9553-ab791e0e83a5")
-		(property "Reference" "#PWR41"
+		(uuid "2faceb2e-13eb-59b5-afb5-779332bb8be7")
+		(property "Reference" "#PWR42"
 			(at 359.41 227.68 0)
 			(hide yes)
 			(effects
@@ -11613,12 +11797,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "d47dd63b-5d81-5105-82cc-581f9f6158f6")
+			(uuid "5218f5b5-7c78-55b0-8e75-be27b27cc975")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR41")
+					(reference "#PWR42")
 					(unit 1)
 				)
 			)
@@ -11727,8 +11911,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "2faceb2e-13eb-59b5-afb5-779332bb8be7")
-		(property "Reference" "#PWR42"
+		(uuid "5c98941b-7077-5c66-ac3f-8afcf757d4fc")
+		(property "Reference" "#PWR43"
 			(at 374.65 227.68 0)
 			(hide yes)
 			(effects
@@ -11774,12 +11958,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "5218f5b5-7c78-55b0-8e75-be27b27cc975")
+			(uuid "f0d48448-8ae8-569e-a560-b4a717bb14d0")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR42")
+					(reference "#PWR43")
 					(unit 1)
 				)
 			)
@@ -11888,8 +12072,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "5c98941b-7077-5c66-ac3f-8afcf757d4fc")
-		(property "Reference" "#PWR43"
+		(uuid "5f93ebb0-9070-5a41-ab02-85dce5882042")
+		(property "Reference" "#PWR44"
 			(at 389.89 227.68 0)
 			(hide yes)
 			(effects
@@ -11935,12 +12119,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "f0d48448-8ae8-569e-a560-b4a717bb14d0")
+			(uuid "7e71123e-a39b-500a-8f52-87e10463d81c")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR43")
+					(reference "#PWR44")
 					(unit 1)
 				)
 			)
@@ -12049,8 +12233,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "5f93ebb0-9070-5a41-ab02-85dce5882042")
-		(property "Reference" "#PWR44"
+		(uuid "87bda759-3fdc-5da6-bd3b-62619028e04b")
+		(property "Reference" "#PWR45"
 			(at 405.13 227.68 0)
 			(hide yes)
 			(effects
@@ -12096,12 +12280,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "7e71123e-a39b-500a-8f52-87e10463d81c")
+			(uuid "89769a70-2ac7-59b7-bb54-a8ee786c3ce6")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR44")
+					(reference "#PWR45")
 					(unit 1)
 				)
 			)
@@ -12244,8 +12428,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "87bda759-3fdc-5da6-bd3b-62619028e04b")
-		(property "Reference" "#PWR45"
+		(uuid "36badb07-e148-5792-9cb3-ca0b2e04f051")
+		(property "Reference" "#PWR46"
 			(at 233.68 131.16 0)
 			(hide yes)
 			(effects
@@ -12291,12 +12475,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "89769a70-2ac7-59b7-bb54-a8ee786c3ce6")
+			(uuid "28d70ee4-bd96-5efe-b3b7-4444813fe985")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR45")
+					(reference "#PWR46")
 					(unit 1)
 				)
 			)
@@ -12350,8 +12534,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "36badb07-e148-5792-9cb3-ca0b2e04f051")
-		(property "Reference" "#PWR46"
+		(uuid "f6176ce6-7bb2-5bd3-a269-bbea139d415f")
+		(property "Reference" "#PWR47"
 			(at 233.68 108.3 0)
 			(hide yes)
 			(effects
@@ -12397,12 +12581,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "28d70ee4-bd96-5efe-b3b7-4444813fe985")
+			(uuid "733b9781-c3b9-5579-80a3-1eafa29647d1")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR46")
+					(reference "#PWR47")
 					(unit 1)
 				)
 			)
@@ -12543,8 +12727,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "f6176ce6-7bb2-5bd3-a269-bbea139d415f")
-		(property "Reference" "#PWR47"
+		(uuid "7b3a9115-5086-5534-a44b-e8c6eef59cb4")
+		(property "Reference" "#PWR48"
 			(at 91.44 169.26 0)
 			(hide yes)
 			(effects
@@ -12590,12 +12774,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "733b9781-c3b9-5579-80a3-1eafa29647d1")
+			(uuid "abc5fde0-bf11-5cca-9075-8aa32f0ed936")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR47")
+					(reference "#PWR48")
 					(unit 1)
 				)
 			)
@@ -12629,8 +12813,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "7b3a9115-5086-5534-a44b-e8c6eef59cb4")
-		(property "Reference" "#PWR48"
+		(uuid "57083cfe-a7d0-5dcf-a8f6-451c157d7962")
+		(property "Reference" "#PWR49"
 			(at 91.44 156.56 0)
 			(hide yes)
 			(effects
@@ -12676,12 +12860,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "abc5fde0-bf11-5cca-9075-8aa32f0ed936")
+			(uuid "85a89f90-f548-5527-a3d9-75e4a7f6c1fb")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR48")
+					(reference "#PWR49")
 					(unit 1)
 				)
 			)
@@ -12812,8 +12996,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "57083cfe-a7d0-5dcf-a8f6-451c157d7962")
-		(property "Reference" "#PWR49"
+		(uuid "2f93703b-83f1-5101-a190-6f4bd73344dd")
+		(property "Reference" "#PWR50"
 			(at 157.48 169.26 0)
 			(hide yes)
 			(effects
@@ -12859,12 +13043,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "85a89f90-f548-5527-a3d9-75e4a7f6c1fb")
+			(uuid "cfde8694-2d71-51d9-a815-1a9725b9f4db")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR49")
+					(reference "#PWR50")
 					(unit 1)
 				)
 			)
@@ -12890,71 +13074,9 @@
 		)
 		(uuid "9a9cc494-3b3a-582b-80e7-bcab1ff345f1")
 	)
-	(symbol
-		(lib_id "power:+3V3")
-		(at 157.48 162.56 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board no)
-		(dnp no)
-		(uuid "2f93703b-83f1-5101-a190-6f4bd73344dd")
-		(property "Reference" "#PWR50"
-			(at 157.48 156.56 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "+3V3"
-			(at 157.48 168.56 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 157.48 162.56 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 157.48 162.56 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 157.48 162.56 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "cfde8694-2d71-51d9-a815-1a9725b9f4db")
-		)
-		(instances
-			(project "BreadPortZero"
-				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR50")
-					(unit 1)
-				)
-			)
-		)
+	(no_connect
+		(at 157.48 162.56)
+		(uuid "328da186-2e9c-51ed-bdfe-85b717c6bb47")
 	)
 	(label "TX"
 		(at 162.56 167.64 0)
@@ -15199,7 +15321,7 @@
 				)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" "4.7k"
 			(at 365.76 56.8 0)
 			(effects
 				(font
@@ -15234,7 +15356,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C25804"
+		(property "LCSC" "C23162"
 			(at 365.76 50.8 0)
 			(hide yes)
 			(effects
@@ -15243,7 +15365,7 @@
 				)
 			)
 		)
-		(property "MPN" "0603WAF1002T5E"
+		(property "MPN" "0603WAF4701T5E"
 			(at 365.76 50.8 0)
 			(hide yes)
 			(effects
@@ -16882,6 +17004,272 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R")
+		(at 172.72 50.8 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "aa7ba1d3-8400-500f-9243-a5c3a9cbe981")
+		(property "Reference" "R27"
+			(at 172.72 44.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "5.1k"
+			(at 172.72 56.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 172.72 50.8 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 172.72 50.8 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 172.72 50.8 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C25905"
+			(at 172.72 50.8 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "0402WGF5101TCE"
+			(at 172.72 50.8 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "883b15ce-e2fc-570f-a0b2-3c8aeb367e84")
+		)
+		(pin "2"
+			(uuid "add2bcaf-021a-5afb-bbd5-5fbcddf5378e")
+		)
+		(instances
+			(project "BreadPortZero"
+				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
+					(reference "R27")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "USB_SW"
+		(at 172.72 46.99 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "2ee5ed28-9543-5549-b01d-634314bce14a")
+	)
+	(label "PR1"
+		(at 172.72 54.61 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "30a05cf0-1217-5757-969b-463e939df0cc")
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 182.88 50.8 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "7bc75517-57e5-5c50-806e-660052e4755a")
+		(property "Reference" "R28"
+			(at 182.88 44.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "2k"
+			(at 182.88 56.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 182.88 50.8 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 182.88 50.8 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 182.88 50.8 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C4109"
+			(at 182.88 50.8 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "0402WGF2001TCE"
+			(at 182.88 50.8 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "62b90ef4-4891-58f7-bbd0-cde7cd3055e7")
+		)
+		(pin "2"
+			(uuid "0e645bff-0a3c-5a13-8c6c-1da4b3d79c2e")
+		)
+		(instances
+			(project "BreadPortZero"
+				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
+					(reference "R28")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "PR1"
+		(at 182.88 46.99 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "52fb703c-bf9f-5b5d-b823-e72202def613")
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 182.88 54.61 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(uuid "0f9c8c05-6622-5d3e-8480-9f837b7ff06b")
+		(property "Reference" "#PWR69"
+			(at 182.88 48.61 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 182.88 60.61 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 182.88 54.61 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 182.88 54.61 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 182.88 54.61 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "aff63a30-b5dd-5436-828a-8b72bd875375")
+		)
+		(instances
+			(project "BreadPortZero"
+				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
+					(reference "#PWR69")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C")
 		(at 101.6 35.56 0)
 		(unit 1)
@@ -16974,8 +17362,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "0f9c8c05-6622-5d3e-8480-9f837b7ff06b")
-		(property "Reference" "#PWR69"
+		(uuid "0e8b946e-a7ac-53d5-8fee-bb3cdf4bbbf9")
+		(property "Reference" "#PWR70"
 			(at 101.6 25.75 0)
 			(hide yes)
 			(effects
@@ -17021,12 +17409,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "aff63a30-b5dd-5436-828a-8b72bd875375")
+			(uuid "be023d97-4220-5af6-94a0-19fbf77b7ec0")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR69")
+					(reference "#PWR70")
 					(unit 1)
 				)
 			)
@@ -17040,8 +17428,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "0e8b946e-a7ac-53d5-8fee-bb3cdf4bbbf9")
-		(property "Reference" "#PWR70"
+		(uuid "430e9d87-96f6-5e64-81cc-38712881fa12")
+		(property "Reference" "#PWR71"
 			(at 101.6 33.37 0)
 			(hide yes)
 			(effects
@@ -17087,12 +17475,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "be023d97-4220-5af6-94a0-19fbf77b7ec0")
+			(uuid "79d7d85a-2e7f-501c-9844-93b3658dc441")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR70")
+					(reference "#PWR71")
 					(unit 1)
 				)
 			)
@@ -17201,8 +17589,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "430e9d87-96f6-5e64-81cc-38712881fa12")
-		(property "Reference" "#PWR71"
+		(uuid "58cde5d5-ab73-58d7-b6db-2054206d904d")
+		(property "Reference" "#PWR72"
 			(at 177.8 33.37 0)
 			(hide yes)
 			(effects
@@ -17248,12 +17636,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "79d7d85a-2e7f-501c-9844-93b3658dc441")
+			(uuid "5e69fddd-b150-57be-9dba-be1cf97b8e15")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR71")
+					(reference "#PWR72")
 					(unit 1)
 				)
 			)
@@ -17352,8 +17740,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "58cde5d5-ab73-58d7-b6db-2054206d904d")
-		(property "Reference" "#PWR72"
+		(uuid "0eb276a8-92ab-544f-94e2-ff3558499f2c")
+		(property "Reference" "#PWR73"
 			(at 233.68 25.75 0)
 			(hide yes)
 			(effects
@@ -17399,12 +17787,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "5e69fddd-b150-57be-9dba-be1cf97b8e15")
+			(uuid "33fba3de-3fae-567a-a702-15a7656ebb9d")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR72")
+					(reference "#PWR73")
 					(unit 1)
 				)
 			)
@@ -17418,8 +17806,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "0eb276a8-92ab-544f-94e2-ff3558499f2c")
-		(property "Reference" "#PWR73"
+		(uuid "3676e5fe-208d-54ca-9e8b-76fc87b704a9")
+		(property "Reference" "#PWR74"
 			(at 233.68 33.37 0)
 			(hide yes)
 			(effects
@@ -17465,12 +17853,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "33fba3de-3fae-567a-a702-15a7656ebb9d")
+			(uuid "81267b77-33ad-5a3d-b0d0-14c82c9d716d")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR73")
+					(reference "#PWR74")
 					(unit 1)
 				)
 			)
@@ -17569,8 +17957,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "3676e5fe-208d-54ca-9e8b-76fc87b704a9")
-		(property "Reference" "#PWR74"
+		(uuid "67be92fd-9960-5917-99b5-32bdedbd0f60")
+		(property "Reference" "#PWR75"
 			(at 251.46 25.75 0)
 			(hide yes)
 			(effects
@@ -17616,12 +18004,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "81267b77-33ad-5a3d-b0d0-14c82c9d716d")
+			(uuid "f01a8d14-7c6a-5fad-9b35-47a78177f2a9")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR74")
+					(reference "#PWR75")
 					(unit 1)
 				)
 			)
@@ -17635,8 +18023,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "67be92fd-9960-5917-99b5-32bdedbd0f60")
-		(property "Reference" "#PWR75"
+		(uuid "1ec845ae-c9dc-5e22-aae4-69446030c72e")
+		(property "Reference" "#PWR76"
 			(at 251.46 33.37 0)
 			(hide yes)
 			(effects
@@ -17682,12 +18070,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "f01a8d14-7c6a-5fad-9b35-47a78177f2a9")
+			(uuid "678f0efb-957c-5137-848a-dcec4566596f")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR75")
+					(reference "#PWR76")
 					(unit 1)
 				)
 			)
@@ -17796,8 +18184,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "1ec845ae-c9dc-5e22-aae4-69446030c72e")
-		(property "Reference" "#PWR76"
+		(uuid "cac577ea-1869-56c7-b9fe-11beb90425b0")
+		(property "Reference" "#PWR77"
 			(at 294.64 109.57 0)
 			(hide yes)
 			(effects
@@ -17843,12 +18231,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "678f0efb-957c-5137-848a-dcec4566596f")
+			(uuid "9168a2be-0753-5809-86d0-fa6e15c06422")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR76")
+					(reference "#PWR77")
 					(unit 1)
 				)
 			)
@@ -17957,8 +18345,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "cac577ea-1869-56c7-b9fe-11beb90425b0")
-		(property "Reference" "#PWR77"
+		(uuid "e2092dd7-5a23-5ac9-bb03-b3596b12b444")
+		(property "Reference" "#PWR78"
 			(at 294.64 124.81 0)
 			(hide yes)
 			(effects
@@ -18004,12 +18392,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "9168a2be-0753-5809-86d0-fa6e15c06422")
+			(uuid "24272c71-0935-5c46-8d07-df7e9b91b044")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR77")
+					(reference "#PWR78")
 					(unit 1)
 				)
 			)
@@ -18118,8 +18506,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "e2092dd7-5a23-5ac9-bb03-b3596b12b444")
-		(property "Reference" "#PWR78"
+		(uuid "ee07f6f6-9904-5616-bf5f-fdb98081b7f3")
+		(property "Reference" "#PWR79"
 			(at 294.64 140.05 0)
 			(hide yes)
 			(effects
@@ -18165,12 +18553,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "24272c71-0935-5c46-8d07-df7e9b91b044")
+			(uuid "58fc87a2-4af9-509b-b059-e3da1dcf82f7")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR78")
+					(reference "#PWR79")
 					(unit 1)
 				)
 			)
@@ -18279,8 +18667,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "ee07f6f6-9904-5616-bf5f-fdb98081b7f3")
-		(property "Reference" "#PWR79"
+		(uuid "e829ae84-20bd-5686-b8e4-162a7512576f")
+		(property "Reference" "#PWR80"
 			(at 294.64 155.29 0)
 			(hide yes)
 			(effects
@@ -18326,12 +18714,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "58fc87a2-4af9-509b-b059-e3da1dcf82f7")
+			(uuid "ac89f1f6-1fc3-5098-8caa-67f9dc9cc6ac")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR79")
+					(reference "#PWR80")
 					(unit 1)
 				)
 			)
@@ -18430,8 +18818,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "e829ae84-20bd-5686-b8e4-162a7512576f")
-		(property "Reference" "#PWR80"
+		(uuid "106d5f88-8a7d-5ec1-b8d0-c0c050c063ea")
+		(property "Reference" "#PWR81"
 			(at 261.62 25.75 0)
 			(hide yes)
 			(effects
@@ -18477,12 +18865,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "ac89f1f6-1fc3-5098-8caa-67f9dc9cc6ac")
+			(uuid "1acc8e74-b044-5ea2-b5a9-4e5bfd20a74d")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR80")
+					(reference "#PWR81")
 					(unit 1)
 				)
 			)
@@ -18496,8 +18884,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "106d5f88-8a7d-5ec1-b8d0-c0c050c063ea")
-		(property "Reference" "#PWR81"
+		(uuid "8b981df6-56ce-53d0-a1b0-e6e6624c330b")
+		(property "Reference" "#PWR82"
 			(at 261.62 33.37 0)
 			(hide yes)
 			(effects
@@ -18543,12 +18931,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "1acc8e74-b044-5ea2-b5a9-4e5bfd20a74d")
+			(uuid "d396d15e-de32-54a0-a03e-17386cad69b7")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR81")
+					(reference "#PWR82")
 					(unit 1)
 				)
 			)
@@ -18647,8 +19035,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "8b981df6-56ce-53d0-a1b0-e6e6624c330b")
-		(property "Reference" "#PWR82"
+		(uuid "22ea19bf-63dd-5578-8997-63e729dfe53a")
+		(property "Reference" "#PWR83"
 			(at 401.32 152.75 0)
 			(hide yes)
 			(effects
@@ -18694,12 +19082,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "d396d15e-de32-54a0-a03e-17386cad69b7")
+			(uuid "6c220320-dc13-51a4-a005-3a318367f443")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR82")
+					(reference "#PWR83")
 					(unit 1)
 				)
 			)
@@ -18713,8 +19101,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "22ea19bf-63dd-5578-8997-63e729dfe53a")
-		(property "Reference" "#PWR83"
+		(uuid "c3530182-6c92-5f6f-9748-3811e48fa296")
+		(property "Reference" "#PWR84"
 			(at 401.32 160.37 0)
 			(hide yes)
 			(effects
@@ -18760,12 +19148,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "6c220320-dc13-51a4-a005-3a318367f443")
+			(uuid "f602f6c7-2ec4-53d0-9ecc-8f01a459ba30")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR83")
+					(reference "#PWR84")
 					(unit 1)
 				)
 			)
@@ -18874,8 +19262,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "c3530182-6c92-5f6f-9748-3811e48fa296")
-		(property "Reference" "#PWR84"
+		(uuid "4fd97cbd-fc0b-51eb-a715-d727cdbb5db9")
+		(property "Reference" "#PWR85"
 			(at 218.44 74.01 0)
 			(hide yes)
 			(effects
@@ -18921,12 +19309,173 @@
 			)
 		)
 		(pin "1"
-			(uuid "f602f6c7-2ec4-53d0-9ecc-8f01a459ba30")
+			(uuid "38480795-ac99-5bde-83dd-001e6b419154")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR84")
+					(reference "#PWR85")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 256.54 66.04 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "968ce7c2-fcaa-5d31-9c63-ecae9e1bfa1d")
+		(property "Reference" "C12"
+			(at 256.54 60.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "1uF"
+			(at 256.54 72.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 256.54 66.04 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 256.54 66.04 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 256.54 66.04 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C52923"
+			(at 256.54 66.04 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "CL05A105KA5NQNC"
+			(at 256.54 66.04 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "776b9eb4-1303-58a4-956b-3295490443bb")
+		)
+		(pin "2"
+			(uuid "991d714a-3eab-5b02-9121-951505c771da")
+		)
+		(instances
+			(project "BreadPortZero"
+				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
+					(reference "C12")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "USB_SW"
+		(at 256.54 62.23 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "fe114a1d-102e-5c90-8d7c-2d7aaf078682")
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 256.54 69.85 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board no)
+		(dnp no)
+		(uuid "ab037d1d-7f9e-569e-944e-5bed21539a3b")
+		(property "Reference" "#PWR86"
+			(at 256.54 63.85 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 256.54 75.85 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 256.54 69.85 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 256.54 69.85 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 256.54 69.85 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "f223490e-0d31-533f-a7d9-cbfd0731e58f")
+		)
+		(instances
+			(project "BreadPortZero"
+				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
+					(reference "#PWR86")
 					(unit 1)
 				)
 			)
@@ -19025,8 +19574,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "4fd97cbd-fc0b-51eb-a715-d727cdbb5db9")
-		(property "Reference" "#PWR85"
+		(uuid "bd1dc294-73a4-5fc1-8dc8-3d5c3ff9517b")
+		(property "Reference" "#PWR87"
 			(at 270.51 49.88 0)
 			(hide yes)
 			(effects
@@ -19072,12 +19621,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "38480795-ac99-5bde-83dd-001e6b419154")
+			(uuid "1b5c6e69-b75e-5b05-9fc8-9c0cd9d96908")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR85")
+					(reference "#PWR87")
 					(unit 1)
 				)
 			)
@@ -19460,8 +20009,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "ab037d1d-7f9e-569e-944e-5bed21539a3b")
-		(property "Reference" "#PWR86"
+		(uuid "5b00f606-8566-58cc-bbb2-613331682a0f")
+		(property "Reference" "#PWR88"
 			(at 132.08 99.41 0)
 			(hide yes)
 			(effects
@@ -19507,12 +20056,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "f223490e-0d31-533f-a7d9-cbfd0731e58f")
+			(uuid "e1c1f7df-3cf2-52e1-8bb3-f8e374f2bbd1")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR86")
+					(reference "#PWR88")
 					(unit 1)
 				)
 			)
@@ -19606,8 +20155,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "bd1dc294-73a4-5fc1-8dc8-3d5c3ff9517b")
-		(property "Reference" "#PWR87"
+		(uuid "37b338bc-4856-52e9-b028-1f2f56635a7f")
+		(property "Reference" "#PWR89"
 			(at 208.28 161.64 0)
 			(hide yes)
 			(effects
@@ -19653,12 +20202,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "1b5c6e69-b75e-5b05-9fc8-9c0cd9d96908")
+			(uuid "1a20a1d8-f22d-5633-aa12-c25b3c248908")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR87")
+					(reference "#PWR89")
 					(unit 1)
 				)
 			)
@@ -19682,8 +20231,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "5b00f606-8566-58cc-bbb2-613331682a0f")
-		(property "Reference" "#PWR88"
+		(uuid "5cb617c5-a856-5e09-ad3e-3faf5dd93f9e")
+		(property "Reference" "#PWR90"
 			(at 218.44 161.64 0)
 			(hide yes)
 			(effects
@@ -19729,12 +20278,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "e1c1f7df-3cf2-52e1-8bb3-f8e374f2bbd1")
+			(uuid "c36a5019-7344-5238-8ac3-1bb13dbb0395")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR88")
+					(reference "#PWR90")
 					(unit 1)
 				)
 			)
@@ -20086,8 +20635,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "37b338bc-4856-52e9-b028-1f2f56635a7f")
-		(property "Reference" "#PWR89"
+		(uuid "75f6855a-4b23-5dd3-8772-bbe6031a2075")
+		(property "Reference" "#PWR91"
 			(at 111.76 80.36 0)
 			(hide yes)
 			(effects
@@ -20133,12 +20682,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "1a20a1d8-f22d-5633-aa12-c25b3c248908")
+			(uuid "0c8828c8-897e-5121-a5e9-01ff574d84c7")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR89")
+					(reference "#PWR91")
 					(unit 1)
 				)
 			)
@@ -20303,8 +20852,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "5cb617c5-a856-5e09-ad3e-3faf5dd93f9e")
-		(property "Reference" "#PWR90"
+		(uuid "f6f1df5d-f5c2-54c0-a679-48cbb6226f3c")
+		(property "Reference" "#PWR92"
 			(at 320.04 70.2 0)
 			(hide yes)
 			(effects
@@ -20350,12 +20899,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "c36a5019-7344-5238-8ac3-1bb13dbb0395")
+			(uuid "e595061b-66ca-59e7-97c9-a328473405c8")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR90")
+					(reference "#PWR92")
 					(unit 1)
 				)
 			)
@@ -20378,7 +20927,7 @@
 				)
 			)
 		)
-		(property "Value" "+5V_SW"
+		(property "Value" "USB_SW"
 			(at 335.28 82.2 0)
 			(effects
 				(font
@@ -20425,7 +20974,7 @@
 			)
 		)
 	)
-	(label "+5V_SW"
+	(label "USB_SW"
 		(at 335.28 76.2 270)
 		(effects
 			(font
@@ -20509,8 +21058,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "75f6855a-4b23-5dd3-8772-bbe6031a2075")
-		(property "Reference" "#PWR91"
+		(uuid "4fa9bc11-f15b-57e3-adf5-edeb221b2565")
+		(property "Reference" "#PWR93"
 			(at 76.2 9.24 0)
 			(hide yes)
 			(effects
@@ -20556,12 +21105,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "0c8828c8-897e-5121-a5e9-01ff574d84c7")
+			(uuid "39121b3b-3b55-5075-98dc-e3dfd7fc28d7")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR91")
+					(reference "#PWR93")
 					(unit 1)
 				)
 			)
@@ -20641,8 +21190,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "f6f1df5d-f5c2-54c0-a679-48cbb6226f3c")
-		(property "Reference" "#PWR92"
+		(uuid "6356c342-50f8-5c62-a065-f2d52e2e4a14")
+		(property "Reference" "#PWR94"
 			(at 88.9 9.24 0)
 			(hide yes)
 			(effects
@@ -20688,12 +21237,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "e595061b-66ca-59e7-97c9-a328473405c8")
+			(uuid "2d07d3e3-e80a-5925-b255-aa09f5d0dbbe")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR92")
+					(reference "#PWR94")
 					(unit 1)
 				)
 			)
@@ -20773,8 +21322,8 @@
 		(in_bom no)
 		(on_board no)
 		(dnp no)
-		(uuid "4fa9bc11-f15b-57e3-adf5-edeb221b2565")
-		(property "Reference" "#PWR93"
+		(uuid "90d5906c-5edc-5d93-b71f-ded2d5d41458")
+		(property "Reference" "#PWR95"
 			(at 101.6 9.24 0)
 			(hide yes)
 			(effects
@@ -20820,12 +21369,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "39121b3b-3b55-5075-98dc-e3dfd7fc28d7")
+			(uuid "a52785c0-245f-5bb2-be85-5e7ad79dd98b")
 		)
 		(instances
 			(project "BreadPortZero"
 				(path "/3b0d7f52-8e3c-4f6a-9d1e-7a5c2b8e4f10"
-					(reference "#PWR93")
+					(reference "#PWR95")
 					(unit 1)
 				)
 			)
@@ -20929,7 +21478,7 @@
 		)
 		(uuid "8817dae0-a598-571c-ad65-40d0e597b5e3")
 	)
-	(text "Power: 5VOUT (pin 6, Settings > ExtPort) -> U1 TPS2553 (234-303 mA, R1 = 100k) -> D3 -> +5V_SW -> U2 TLV62569 buck -> 3.3 V"
+	(text "Power: 5VOUT (pin 6, Settings > ExtPort) -> U1 TPS2553 (234-303 mA, R1 = 100k) -> U8 TPS2116 mux (VIN2) -> +5V_SW -> U2 TLV62569 buck -> 3.3 V"
 		(exclude_from_sim no)
 		(at 25.4 264.16 0)
 		(effects
@@ -20940,7 +21489,7 @@
 		)
 		(uuid "d0e0b048-e930-5633-8056-f90c23bb471d")
 	)
-	(text "USB-C J13 (5.1k Rd on CC) -> D4 TVS -> U6 TPS2553 (1.09-1.26 A, R24 = 22k) -> +5V_SW. U6 shares U1's EN, so USB only powers the cap while the host's 5VOUT is on; D3 makes USB (higher) carry the load and blocks it from the host"
+	(text "USB-C J13 (5.1k Rd on CC) -> D4 TVS -> U6 TPS2553 (1.09-1.26 A, R24 = 22k) -> USB_SW -> U8 (VIN1). U6 shares U1's EN, so USB only powers the cap while the host's 5VOUT is on"
 		(exclude_from_sim no)
 		(at 25.4 269.24 0)
 		(effects
@@ -20951,7 +21500,7 @@
 		)
 		(uuid "1fae196a-6216-5ec4-b65d-5dc0ce49dd63")
 	)
-	(text "Neither source can back-feed the other: D3 blocks USB from the host's 5V, U6 blocks the host from VBUS (1 uA max reverse with VIN = 0). D2 lights while U1 (host path) limits current or is in thermal shutdown (U6's FAULT is left open)"
+	(text "U8 uses USB while USB_SW is above 3.55 V (R27/R28, 3.3-3.8 V over tolerance), else the host. Only one of its switches is on at a time, so neither source can back-feed the other (a TPS2553 alone needs over 1 A of reverse current to turn off). D2 lights while U1 (host path) limits current or is in thermal shutdown (U6's FAULT is left open)"
 		(exclude_from_sim no)
 		(at 25.4 274.32 0)
 		(effects
@@ -21028,7 +21577,7 @@
 		)
 		(uuid "ee59bb9f-f130-527d-a4a7-e3405e8d5c0c")
 	)
-	(text "R10/R11 (4.7k) limit current into or out of a UART device that is unpowered or runs at 5 V. U5: ESD protection on the UART socket"
+	(text "R10/R11 (4.7k) limit current into or out of a UART device that is unpowered or runs at 5 V. U5: ESD protection on the UART socket; its rail pin is open, so a 5 V TX line can't feed the 3.3 V rail"
 		(exclude_from_sim no)
 		(at 25.4 309.88 0)
 		(effects
