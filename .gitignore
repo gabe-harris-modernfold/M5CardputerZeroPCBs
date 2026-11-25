@@ -13,3 +13,5 @@ _gerber_check/
 
 # Third-party reference drawings (not ours to redistribute)
 docs/*.pdf
+# KiCad lock files
+*.lck

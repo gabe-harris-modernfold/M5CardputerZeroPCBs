@@ -1,0 +1,4 @@
+(sym_lib_table
+	(version 7)
+	(lib (name "BreadPortZero")(type "KiCad")(uri "${KIPRJMOD}/BreadPortZero.kicad_sym")(options "")(descr "BreadPortZero project symbols"))
+)
