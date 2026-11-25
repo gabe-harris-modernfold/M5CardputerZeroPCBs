@@ -175,13 +175,14 @@ def main():
 
     G = 2.54
     layout = {
-        # power: host 5 V -> current-limited switch -> LDO
-        "J1": (20, 22), "C1": (40, 14), "U1": (50, 14), "R1": (62, 18), "D3": (60, 9), "C2": (70, 14),
+        # power: host 5 V -> current-limited switch -> power mux (with its threshold divider) -> buck
+        "J1": (20, 22), "C1": (40, 14), "U1": (50, 14), "R1": (62, 18), "U8": (60, 8), "C2": (70, 14),
+        "R27": (68, 20), "R28": (72, 20),
         "U2": (80, 14), "L1": (87, 11), "R25": (88, 20), "R26": (88, 26),
         "C3": (92, 14), "C4": (99, 14), "C9": (103, 14), "R9": (108, 12), "D1": (108, 22),
-        # USB-C supplemental input: jack, CC pull-downs, TVS, input cap, current-limited switch
+        # USB-C supplemental input: jack, CC pull-downs, TVS, input cap, current-limited switch and its output cap
         "J13": (62, 30), "R22": (74, 26), "R23": (74, 32), "D4": (80, 30), "C11": (86, 30), "U6": (96, 30),
-        "R24": (106, 32),
+        "R24": (106, 32), "C12": (101, 26),
         # SPI buffer, its decoupling and MISO pull-up, socket ESD
         "U7": (148, 72), "C10": (158, 64), "R21": (158, 72),
         "D5": (140, 92), "D6": (146, 92), "D7": (152, 92), "D8": (158, 92),
@@ -243,13 +244,13 @@ def main():
         "BreadPortZero: I2C x4 (STEMMA QT/Qwiic + 0.1 in sockets), SPI, UART and 4 analog inputs for the "
         "CardputerZero top port, with a USB-C supplemental 5 V input",
         "J1 pin map from M5Stack's port photo: 12 = G14 TX, 14 = G15 RX (the docs table swaps them)",
-        "Power: 5VOUT (pin 6, Settings > ExtPort) -> U1 TPS2553 (234-303 mA, R1 = 100k) -> D3 -> +5V_SW -> "
-        "U2 TLV62569 buck -> 3.3 V",
-        "USB-C J13 (5.1k Rd on CC) -> D4 TVS -> U6 TPS2553 (1.09-1.26 A, R24 = 22k) -> +5V_SW. U6 shares U1's EN, so "
-        "USB only powers the cap while the host's 5VOUT is on; D3 makes USB (higher) carry the load and blocks it "
-        "from the host",
-        "Neither source can back-feed the other: D3 blocks USB from the host's 5V, U6 blocks the host from VBUS "
-        "(1 uA max reverse with VIN = 0). D2 lights while U1 (host path) limits current or is in thermal shutdown "
+        "Power: 5VOUT (pin 6, Settings > ExtPort) -> U1 TPS2553 (234-303 mA, R1 = 100k) -> U8 TPS2116 mux (VIN2) -> "
+        "+5V_SW -> U2 TLV62569 buck -> 3.3 V",
+        "USB-C J13 (5.1k Rd on CC) -> D4 TVS -> U6 TPS2553 (1.09-1.26 A, R24 = 22k) -> USB_SW -> U8 (VIN1). U6 shares "
+        "U1's EN, so USB only powers the cap while the host's 5VOUT is on",
+        "U8 uses USB while USB_SW is above 3.55 V (R27/R28, 3.3-3.8 V over tolerance), else the host. Only one of its "
+        "switches is on at a time, so neither source can back-feed the other (a TPS2553 alone needs over 1 A of "
+        "reverse current to turn off). D2 lights while U1 (host path) limits current or is in thermal shutdown "
         "(U6's FAULT is left open)",
         "SPI: G11/G10/G9 are shared with the CardputerZero's display (CE0), so U7 (74LVC125) buffers them. MISO "
         "drives G9 only while CS (G7) is low; Ioff isolates the display's bus when the cap is off. D5-D8: socket ESD",
@@ -265,7 +266,7 @@ def main():
         "Analog inputs 0-3.3 V: R5-R8 with C5-C8 = 1.6 kHz anti-alias filter, and they limit fault current. "
         "R17-R20 (not fitted): divider pads, e.g. 1.8k for 0-5 V inputs",
         "R10/R11 (4.7k) limit current into or out of a UART device that is unpowered or runs at 5 V. "
-        "U5: ESD protection on the UART socket",
+        "U5: ESD protection on the UART socket; its rail pin is open, so a 5 V TX line can't feed the 3.3 V rail",
     ]
     for i, t in enumerate(notes):
         items.append(S("text", t, S("exclude_from_sim", Sym("no")), S("at", 10 * G, (100 + 2 * i) * G, 0),

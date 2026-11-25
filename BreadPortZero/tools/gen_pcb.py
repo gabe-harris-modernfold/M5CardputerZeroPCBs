@@ -10,10 +10,11 @@ Layout (top view, keyboard side at the top edge):
 - SPI at the left end, between Qwiic 1 and 2: U7 (74LVC125 buffer) with C10 and R21 (MISO pull-up) above it and the
   TVS diodes D5-D8 below, straight into the SPI socket. G11/G10/G9/G7 reach U7 from J1 in a band along the top edge of
   the bottom layer, then down beside it to vias under the package.
-- Power chain right of J1 along the top: C1, U1 (host current limit), R1, D3 (host diode), C2, U2 (buck), L1, C3, C9,
-  power LED. The FAULT LED (D2, R14) sits under U1, the buck's feedback divider (R25, R26) under U2.
-- USB-C jack (J13) in the top-right corner, opening on the right edge; U6 (USB current limit), D4, C11, the CC
-  pull-downs R22/R23 and R24 below it. U6's output runs back to the buck along the bottom layer.
+- Power chain right of J1 along the top: C1, U1 (host current limit), R1, U8 (power mux, with its threshold divider
+  R27/R28 above it), C2, U2 (buck), L1, C3, C9, power LED. The FAULT LED (D2, R14) sits under U1, the buck's feedback
+  divider (R25, R26) under U2.
+- USB-C jack (J13) in the top-right corner, opening on the right edge; U6 (USB current limit), D4, C11, C12, the CC
+  pull-downs R22/R23 and R24 below it. U6's output (USB_SW) runs back to the mux along the bottom layer.
 - U3 (ADS1115) under the power chain with C4 at its VDD pin, R5-R8 and C5-C8 under it, straight into the analog socket.
   Its address jumpers JP4-JP6 are on the bottom, under its left side. Divider pads R17-R20 sit in the gaps around it.
 - Power switch right of the ADC: R15 (EN pull-up) above, Q3 and R16 between the AIN3 track and the 3V3 trunk. EN,
@@ -85,12 +86,13 @@ board.Add(rect)
 fps = {}
 parts = {p["ref"]: p for p in D.PARTS}
 # names the schematic gives unconnected pins (net "unconnected-(<ref>-<pin name>-Pad<n>)")
-NC_PIN_NAMES = {"U6": {"4": "~{FAULT}"},
+NC_PIN_NAMES = {"U6": {"4": "~{FAULT}"}, "U5": {"5": "VBUS"}, "U8": {"8": "ST"},
                 "J13": {"A6": "D+", "B6": "D+", "A7": "D-", "B7": "D-", "A8": "SBU1", "B8": "SBU2"}}
 SOLID_GND = {("U1", "2"), ("U2", "2"),   # regulator GND pins: full pour connection, it's their main heat path
              ("J13", "SH")}             # USB-C shell legs: VBUS and the GND pads leave room for one spoke only
-# USB-C GND pads: no pour connection (spokes would run into the plastic pegs' holes); a track ties each to a shell leg
-NO_ZONE = {("J13", "A1"), ("J13", "A12"), ("J13", "B1"), ("J13", "B12")}
+# USB-C GND pads: no pour connection (spokes would run into the plastic pegs' holes); a track ties each to a shell leg.
+# The mux's GND pin (0.5 mm pitch, boxed in by its neighbours) is tied to C2's GND pad by a track instead.
+NO_ZONE = {("J13", "A1"), ("J13", "A12"), ("J13", "B1"), ("J13", "B12"), ("U8", "1")}
 
 
 def load(fpid):
@@ -264,12 +266,17 @@ horizontal("R12", COL[2] + 0.775, PUH_Y)               # pad 1 over pin 5
 horizontal("R13", COL[1] - 0.775, PUH_Y, pin1_left=False)   # pad 1 over pin 3
 horizontal("JP8", 53.5, PUH_Y + 0.4)    # bottom: pad 1 PU_HOST, pad 2 +3V3; courtyard 0.6 mm from the edge
 
-# Power chain along the top: host 5 V -> C1 -> U1 (current limit) -> D3 -> +5V_SW (C2) -> U2 (buck) -> L1 -> +3V3
-# (C3) -> the trunk (x 72.3). The buck's feedback divider (R25/R26) and output cap sit under it.
+# Power chain along the top: host 5 V -> C1 -> U1 (current limit) -> U8 (mux) -> +5V_SW (C2) -> U2 (buck) -> L1 ->
+# +3V3 (C3) -> the trunk (x 72.3). The buck's feedback divider (R25/R26) and output cap sit under it.
 vertical("C1", 53.2, 4.0, pin1_up=True)                 # +5V on top
 place_oriented("U1", 56.4, 4.0, lambda: pad_xy("U1", 1)[0] < 56.4 and pad_xy("U1", 1)[1] < 4.0)  # IN top-left
-vertical("R1", 59.75, 4.4, pin1_up=True)               # ILIM on top
-vertical("D3", 62.0, 3.7, pin1_up=False)               # anode (U1_OUT) up, cathode (+5V_SW) down
+vertical("R1", 59.3, 4.4, pin1_up=True)                # ILIM on top
+# Power mux where the two 5 V paths meet. Left column (top to bottom): MODE, VIN2 (host), VOUT, ST; right column:
+# PR1, VIN1 (USB), VOUT, GND. Its threshold divider sits above it, along the top edge.
+U8_X, U8_Y = 61.5, 2.95
+place_oriented("U8", U8_X, U8_Y, lambda: pad_xy("U8", 5)[0] < U8_X and pad_xy("U8", 5)[1] < U8_Y)   # MODE top-left
+horizontal("R27", 61.95, 1.05, pin1_left=False)        # pad 1 (USB_SW) right, pad 2 (PR1) left; courtyards 0.58 mm
+horizontal("R28", 60.05, 1.05, pin1_left=False)        # from the edge. Pad 1 (PR1) right, pad 2 (GND) left
 vertical("C2", 64.3, 3.35, pin1_up=True)                # +5V_SW on top
 U2_X, U2_Y = 67.4, 3.35
 place_oriented("U2", U2_X, U2_Y, lambda: pad_xy("U2", 4)[0] < U2_X and pad_xy("U2", 4)[1] < U2_Y)  # VIN top-left
@@ -284,12 +291,13 @@ vertical("D1", 75.4, 7.2, pin1_up=True)                 # cathode top, anode bot
 # USB-C jack in the top-right corner, opening to the right edge (front face 1 mm past it); Qwiic 4 below it
 J13_X, J13_Y = D.BOARD_W + 1.0 - 3.675, 5.9
 place_oriented("J13", J13_X, J13_Y, lambda: pad_xy("J13", "A1")[0] < J13_X and pad_xy("J13", "A1")[1] > J13_Y)
-# USB input block between the jack and Qwiic 4: U6 (VBUS -> +5V_SW, IN top-right), D4 (clamp) and C11 by its input,
-# R24 (limit) under it, CC pull-downs R22/R23 and JP9 to the right
+# USB input block between the jack and Qwiic 4: U6 (VBUS -> USB_SW, IN top-right), D4 (clamp) and C11 by its input,
+# C12 at its output, R24 (limit) under it, CC pull-downs R22/R23 and JP9 to the right
 U6_X, U6_Y = 75.2, 13.6
 place_oriented("U6", U6_X, U6_Y, lambda: pad_xy("U6", 1)[0] > U6_X and pad_xy("U6", 1)[1] < U6_Y)
 vertical("D4", 77.9, 12.6, pin1_up=True)                # cathode (VBUS) up
 vertical("C11", 79.2, 12.3, pin1_up=True)               # VBUS up
+horizontal("C12", 78.0, 14.35)                          # pad 1 (USB_SW) left, towards U6's OUT pin
 vertical("R24", U6_X, 16.7, pin1_up=True)               # ILIM up
 vertical("R22", 80.5, 13.5, pin1_up=True)               # CC1 up
 vertical("R23", 82.1, 13.5, pin1_up=True)               # CC2 up
@@ -509,12 +517,7 @@ for host, sig, r, top, bot, sock in (("TX_HOST", "TX", "R10", 6, 1, 3), ("RX_HOS
     sx, sy = pad("J10", sock)
     bx = u5[bot][0]
     track(sig, F, [pad(r, 2), u5[top], u5[bot], (bx, UART_JOG_Y), (sx, UART_JOG_Y + abs(sx - bx)), (sx, sy)])
-# U5's 3V3 pin: up to a via, then on the bottom down to the spine. Its GND pin: down to a via between the spine and
-# the ALERT run
-u5v = (u5[5][0], u5[5][1] - 1.26)
-track("+3V3", F, [u5[5], u5v])
-via("+3V3", *u5v)
-track("+3V3", B, [u5v, (u5v[0], SPINE_Y)])
+# U5's rail pin (5) is left open (see design.py). Its GND pin: down to a via between the spine and the ALERT run
 u5g = (u5[2][0], 15.4)
 track("GND", F, [u5[2], u5g], 0.4)
 via("GND", *u5g)
@@ -634,7 +637,7 @@ d2 = {n: pad("D2", n) for n in (1, 2)}
 track("+5V", F, [(V5[0], r14[1][1]), r14[1]])
 track("FLT_A", F, [r14[2], d2[2]])
 track("FAULT", F, [d2[1], (d2[1][0], u1[4][1] + 0.95), (u1[4][0], u1[4][1] + 0.55), u1[4]])
-# Bottom-layer runs under the power chain (top to bottom): +3V3 to JP8 (y 0.75), +5V_SW from U6 back to the buck
+# Bottom-layer runs under the power chain (top to bottom): +3V3 to JP8 (y 0.75), USB_SW from U6 back to the mux
 # (y 1.75), G7 to JP9 (y 4.9 / 4.4), EN (y 6.3), +5V to R15 (y 8.1)
 SWB_Y, G7_Y, EN_Y, P5_Y = 1.75, 4.4, 6.3, 8.1
 # EN: straight down from U1 to a via, then on the bottom to U2, R15/Q3 and U6
@@ -667,27 +670,42 @@ gv1 = (54.15, 4.15)
 track("GND", F, [c1[2], (c1[2][0] + 0.4, gv1[1] + 0.55), gv1], 0.4)
 track("GND", F, [u1[2], gv1], 0.4)
 via("GND", *gv1)
-# ILIM to R1. R1's GND pad sits in a pocket of the top pour boxed in by U1_OUT, +5V_SW and the ADC's rail: a via ties
+# ILIM to R1. R1's GND pad sits in a pocket of the top pour boxed in by U1_OUT, the mux and the ADC's rail: a via ties
 # it down (between the G7 and EN runs on the bottom)
 r1 = {n: pad("R1", n) for n in (1, 2)}
 track("ILIM", F, [u1[5], (r1[1][0], u1[5][1])], 0.45)
 gr1 = (60.75, 5.35)
 track("GND", F, [r1[2], (r1[2][0], gr1[1]), gr1], 0.3)
 via("GND", *gr1)
-# Host path: U1 OUT along the top edge to D3's anode; D3's cathode round to C2 (+5V_SW) and the buck's VIN
-d3 = {n: pad("D3", n) for n in (1, 2)}
+# Host path: U1 OUT straight across, above R1's ILIM pad, to the mux's VIN2
+u8 = {n: pad("U8", n) for n in range(1, 9)}
 c2 = {n: pad("C2", n) for n in (1, 2)}
 u2 = {n: pad("U2", n) for n in range(1, 6)}
-OUT_Y = 2.0
-track("U1_OUT", F, [u1[6], (58.1, u1[6][1]), (58.1, OUT_Y), (d3[2][0], OUT_Y), d3[2]], PWR_TRACK)
-SWX = 63.2
-swv = (SWX, SWB_Y)                                      # +5V_SW from U6 comes up here
-track("+5V_SW", F, [d3[1], (SWX, d3[1][1]), (SWX, c2[1][1]), c2[1], u2[4]], 0.3)
-track("+5V_SW", F, [(SWX, c2[1][1]), swv], 0.5)
-via("+5V_SW", *swv)
-SWV2 = (76.6, 15.85)                                    # +5V_SW from U6's OUT pin
-track("+5V_SW", B, [swv, (SWV2[0], SWB_Y), SWV2], 0.5)
-via("+5V_SW", *SWV2)
+track("U1_OUT", F, [u1[6], (58.3, u1[6][1]), (58.3 + u1[6][1] - u8[6][1], u8[6][1]), u8[6]], 0.3)
+# USB path: USB_SW comes back from U6 along the bottom to a via right of the mux and into VIN1. A fine link under the
+# package takes it on to MODE (priority mode: USB while PR1 is above the threshold)
+usv = (63.05, 1.6)
+via("USB_SW", *usv)
+track("USB_SW", F, [usv, (usv[0], u8[3][1]), u8[3]], 0.3)
+track("USB_SW", F, [u8[3], (61.85, u8[3][1]), (61.85 - (u8[3][1] - u8[5][1]), u8[5][1]), u8[5]], FINE)
+SWV2 = (76.6, 15.85)                                    # USB_SW from U6's OUT pin
+track("USB_SW", B, [usv, (usv[0] + SWB_Y - usv[1], SWB_Y), (SWV2[0], SWB_Y), SWV2], 0.5)
+via("USB_SW", *SWV2)
+# Mux output: its two VOUT pins joined under the package, then round to C2 (+5V_SW) and the buck's VIN. Its GND pin
+# goes to C2's GND pad (and that pad's via)
+track("+5V_SW", F, [u8[7], u8[2], (63.9, u8[2][1]), (63.9, c2[1][1]), c2[1]], 0.3)
+track("+5V_SW", F, [c2[1], u2[4]], 0.5)
+track("GND", F, [u8[1], (63.3, u8[1][1]), (63.3 + c2[2][1] - u8[1][1], c2[2][1]), c2[2]], 0.3)
+# Threshold divider above the mux: USB_SW -> R27 -> PR1 -> R28 -> GND (a via: the top pour here is a narrow strip)
+r27 = {n: pad("R27", n) for n in (1, 2)}
+r28 = {n: pad("R28", n) for n in (1, 2)}
+track("USB_SW", F, [usv, r27[1]])
+PR1_Y = 1.75
+track("PR1", F, [u8[4], (u8[4][0], PR1_Y), (r27[2][0], PR1_Y), r27[2]])
+track("PR1", F, [r27[2], r28[1]], 0.45)                 # wide: balances R28's pour-side pad heat
+gr28 = (58.9, 1.7)
+track("GND", F, [r28[2], gr28])
+via("GND", *gr28)
 gc2 = (c2[2][0], 5.35)
 track("GND", F, [c2[2], gc2], 0.4)
 via("GND", *gc2)
@@ -717,6 +735,9 @@ track("+3V3", F, [l1[2], (TRUNK_X, l1[2][1])], PWR_TRACK)
 track("+3V3", F, [c3[1], (TRUNK_X, c3[1][1])], PWR_TRACK)
 via("+3V3", TRUNK_X, LY["+3V3"])
 lane_x["+3V3"].append(TRUNK_X)
+# a second via onto the lane beside the first: this joint carries the whole 3.3 V load (up to about 1 A)
+track("+3V3", F, [(TRUNK_X, LY["+3V3"]), (TRUNK_X + 1.0, LY["+3V3"])], PWR_TRACK)
+via("+3V3", TRUNK_X + 1.0, LY["+3V3"])
 c4 = {n: pad("C4", n) for n in (1, 2)}
 # bulk cap and PWR LED right of the trunk
 c9 = {n: pad("C9", n) for n in (1, 2)}
@@ -763,9 +784,14 @@ for gp in ("A1", "A12"):
              abs(pcbnew.ToMM(pd.GetPosition().x) - OX - J13p[gp][0]))
     track("GND", F, [J13p[gp], (round(pcbnew.ToMM(sh.GetPosition().x) - OX, 3),
                                 round(pcbnew.ToMM(sh.GetPosition().y) - OY, 3))], 0.4)
-# U6: OUT to the +5V_SW via (and TP2), ILIM down to R24
-track("+5V_SW", F, [u6[6], (u6[6][0], SWV2[1]), SWV2], 0.5)
-track("+5V_SW", F, [SWV2, pad("TP2", 1)], 0.4)
+# U6: OUT to the USB_SW via (and TP2) and to C12; ILIM down to R24
+track("USB_SW", F, [u6[6], (u6[6][0], SWV2[1]), SWV2], 0.5)
+track("USB_SW", F, [SWV2, pad("TP2", 1)], 0.4)
+c12 = {n: pad("C12", n) for n in (1, 2)}
+track("USB_SW", F, [u6[6], (u6[6][0] + u6[6][1] - c12[1][1], c12[1][1]), c12[1]], 0.3)
+gc12 = (79.3, 14.6)
+track("GND", F, [c12[2], gc12], 0.3)
+via("GND", *gc12)
 track("ILIM2", F, [u6[5], pad("R24", 1)], 0.45)
 gu6 = (u6[2][0], 11.0)
 track("GND", F, [u6[2], gu6], 0.4)
@@ -940,7 +966,7 @@ text("I2C1", (SDA_X + SCL_X) / 2, 10.3, size=0.8)
 text("SPI0 CE1", (pad("J6", 3)[0] + pad("J6", 6)[0]) / 2, 16.95, size=0.8)   # which bus the SPI socket is on
 text("PU", PU_X + 3.35, 7.2, size=0.8)
 text("ALERT", jp7[1][0] - 2.9, D.J1_ODD_Y, size=0.8)
-for tp, lbl, dx, dy in (("TP1", "5V", 0, 1.5), ("TP2", "5VSW", 2.6, 0)):
+for tp, lbl, dx, dy in (("TP1", "5V", 0, 1.5), ("TP2", "VUSB", 2.6, 0)):
     x, y = pad(tp, 1)
     text(lbl, x + dx, y + dy, size=0.8)
 # --- bottom silkscreen: the board's manual ----------------------------------------------------------------------
@@ -999,7 +1025,7 @@ for k, (lbl, line) in enumerate([("I2C", "bus 3: G22 SDA, G23 SCL, 4.7k pull-ups
                                  ("SPI", "/dev/spidev0.1, CS = G7 (CE1)"),
                                  ("UART", "G14 TX, G15 RX: serial console off"),
                                  ("A0-A3", "ADS1115 16-bit, 0-3.3 V max"),
-                                 ("3V3", "250 mA from the host, 1 A with USB-C")]):
+                                 ("3V3", "220 mA from the host, 1 A with USB-C")]):
     y = 11.55 + PITCH * k
     btext(lbl, QA, y)
     btext(line, QA - 5.0, y)
@@ -1031,7 +1057,7 @@ btext("JP9 = G7 OFF", 72.6, 8.2, bold=True)
 for k, line in enumerate(["bridged: G7 high", "= cap off, no SPI"]):
     btext(line, 72.6, 9.45 + PITCH * k)
 btext("ADC ADDRESS", 72.6, 11.95, bold=True)
-for k, line in enumerate(["48 as made", "4A/4B: cut JP4"]):
+for k, line in enumerate(["48 as made", "49/4A/4B: cut 48"]):     # cut first: bridging 49 too shorts 3V3 to GND
     btext(line, 72.6, 13.2 + PITCH * k)
 btext("4B", JPA_X - 2.1, jp5[2][1] + 0.65, align="center")
 btext("4A", JPA_X - 2.1, jp6[1][1] + 0.65, align="center")

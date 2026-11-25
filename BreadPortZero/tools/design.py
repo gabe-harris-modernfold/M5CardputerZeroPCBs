@@ -6,7 +6,7 @@ the right, y down, origin at the top-left board corner. y = 0 is the edge on the
 import os
 from pathlib import Path
 
-VERSION = "0.4"                 # schematic revision and silkscreen
+VERSION = "0.5"                # schematic revision and silkscreen
 BOARD_W, BOARD_H = 84.0, 24.0   # same footprint as M5Stack's Cap modules (and LightSensingPCB)
 BOARD_THICKNESS = 1.6
 
@@ -117,9 +117,12 @@ C100N = ("100nF", "C14663", "CC0603KRX7R9BB104")
 C100N_0402 = ("100nF", "C1525", "CL05B104KO5NNNC", "0402")
 C10U = ("10uF", "C15850", "CL21A106KAYNNNE", "0805")
 R5K1 = ("5.1k", "C23186", "0603WAF5101T5E")
-# 0402 where space is tight (around the USB-C jack and the buck)
+# 0402 where space is tight (around the USB-C jack, the buck and the power mux)
 R22K_0402 = ("22k", "C25768", "0402WGF2202TCE", "0402")
 R100K_0402 = ("100k", "C25741", "0402WGF1003TCE", "0402")
+R5K1_0402 = ("5.1k", "C25905", "0402WGF5101TCE", "0402")
+R2K_0402 = ("2k", "C4109", "0402WGF2001TCE", "0402")
+C1U_0402 = ("1uF", "C52923", "CL05A105KA5NQNC", "0402")
 ESD5Z = dict(lib="Device:D_Zener", value="ESD5Z5.0", fp="Diode_SMD:D_SOD-523", side="top", mpn="ESD5Z5.0T1G",
              lcsc="C5199848")
 TPS2553 = dict(lib="BreadPortZero:TPS2553DBV", value="TPS2553", fp="Package_TO_SOT_SMD:SOT-23-6", side="top",
@@ -144,14 +147,16 @@ PARTS = [
     # second TPS2553 on the USB input: limit 1.09-1.26 A with R24 = 22k; enabled from the same EN as U1, so USB only
     # powers the cap while the host's 5VOUT is on
     dict(ref="U6", **TPS2553),
+    # power mux: picks USB (VIN1, after U6) while it is above about 3.55 V, else the host (VIN2, after U1). Only one
+    # switch is on at a time, so neither source can feed the other. (A TPS2553 alone does not keep the host out of
+    # the jack: its reverse comparator needs over 1 A of reverse current, which an unplugged jack never draws.)
+    dict(ref="U8", lib="BreadPortZero:TPS2116DRL", value="TPS2116", fp="Package_TO_SOT_SMD:SOT-583-8", side="top",
+         mpn="TPS2116DRLR", lcsc="C3235557"),
     # 3.3 V buck (replaces v0.3's AP2112K LDO): 2 A, about 90% efficient
     dict(ref="U2", lib="BreadPortZero:TLV62569DBV", value="TLV62569", fp="Package_TO_SOT_SMD:SOT-23-5", side="top",
          mpn="TLV62569DBVR", lcsc="C141836"),
     dict(ref="L1", lib="Device:L", value="2.2uH", fp="Inductor_SMD:L_Changjiang_FTC252012S", side="top",
          mpn="FTC252012S2R2MBCA", lcsc="C5832372"),
-    # host path diode: lets USB (about 0.45 V higher) take the load, and stops USB back-feeding the host's 5VOUT
-    dict(ref="D3", lib="Device:D_Schottky", value="B5819W", fp="Diode_SMD:D_SOD-123", side="top",
-         mpn="B5819W SL", lcsc="C8598"),
     dict(ref="D4", **ESD5Z),                    # VBUS clamp: hot-plug ringing (TPS2553 IN is 7 V abs max)
     # SPI buffer: SCK/MOSI/CS out to the socket, MISO back only while CS (G7) is low; Ioff isolates when unpowered
     dict(ref="U7", lib="BreadPortZero:74LVC125_PW", value="74LVC125", fp="Package_SO:TSSOP-14_4.4x5mm_P0.65mm",
@@ -168,19 +173,24 @@ PARTS = [
     _r("R5", *R1K), _r("R6", *R1K), _r("R7", *R1K), _r("R8", *R1K), _r("R9", *R1K),
     _r("R10", *R4K7), _r("R11", *R4K7),
     _r("R12", *R10K), _r("R13", *R10K),
-    _r("R14", *R1K), _r("R15", *R100K_0402), _r("R16", *R10K),
+    # R16 4.7k: the Pi's default pull-up on G7 (about 50k) leaves Q3's gate at 0.28 V, well under its threshold
+    _r("R14", *R1K), _r("R15", *R100K_0402), _r("R16", *R4K7),
     # divider pads, AINx to GND (unfitted)
     _dnp("R17", "A0 div"), _dnp("R18", "A1 div"), _dnp("R19", "A2 div"), _dnp("R20", "A3 div"),
     _r("R21", *R100K),                          # MISO pull-up (socket side): defined level with nothing plugged in
     _r("R22", *R5K1), _r("R23", *R5K1),         # USB-C CC1/CC2 pull-downs (Rd)
     _r("R24", *R22K_0402),                      # U6 current limit
     _r("R25", *R100K_0402), _r("R26", *R22K_0402),   # buck feedback: 0.6 V x (1 + 100k/22k) = 3.33 V
+    # mux threshold: USB is used while U6's output is above VREF x (1 + 5.1k/2k) = 3.55 V (3.3-3.8 V over VREF's
+    # 0.92-1.08 V); the divider also drains VBUS after an unplug. Both values are JLCPCB basic parts
+    _r("R27", *R5K1_0402), _r("R28", *R2K_0402),
     _c("C1", *C10U), _c("C2", *C10U), _c("C3", *C10U),
     _c("C4", *C100N),
     _c("C5", *C100N_0402), _c("C6", *C100N_0402), _c("C7", *C100N_0402), _c("C8", *C100N_0402),
     _c("C9", "22uF", "C45783", "CL21A226MAQNNNE", "0805"),
     _c("C10", *C100N),                          # U7 decoupling
-    _c("C11", "1uF", "C52923", "CL05A105KA5NQNC", "0402"),   # USB VBUS input (small: limits hot-plug ringing)
+    _c("C11", *C1U_0402),                       # USB VBUS input (small: limits hot-plug ringing)
+    _c("C12", *C1U_0402),                       # U6's output, the mux's USB input
     dict(ref="D1", lib="Device:LED", value="PWR", fp="LED_SMD:LED_0603_1608Metric", side="top",
          mpn="19-217/G7C-AN1P2/6T", lcsc="C2986030"),
     dict(ref="D2", lib="Device:LED", value="FAULT", fp="LED_SMD:LED_0603_1608Metric", side="top",
@@ -195,7 +205,7 @@ PARTS = [
     _jp("JP9", "2_Open", "G7 power off (no SPI)", side="bottom"),
     # test pads
     # (v0.3's TP3-TP6 are gone: every socket already exposes 3V3, GND, SDA and SCL)
-    _tp("TP1", "+5V"), _tp("TP2", "+5V_SW"),
+    _tp("TP1", "+5V"), _tp("TP2", "USB_SW"),
 ]
 
 # pin -> net per part (schematic and PCB use the same table). None = not connected.
@@ -205,8 +215,13 @@ NETS = {
     **{ref: {i + 1: n for i, n in enumerate(nets)} for ref, (_, _, nets) in SOCKETS.items()},
     # TPS2553: 1 IN, 2 GND, 3 EN (active high), 4 FAULT (open drain), 5 ILIM, 6 OUT
     "U1": {1: "+5V", 2: "GND", 3: "EN", 4: "FAULT", 5: "ILIM", 6: "U1_OUT"},
-    "D3": {1: "+5V_SW", 2: "U1_OUT"},       # Device:D_Schottky pin 1 = K, pin 2 = A
-    # USB-C input: VBUS -> TVS, 1 uF -> U6 -> +5V_SW. U6 shares U1's EN (host 5V on and not
+    # TPS2116 power mux: 1 GND, 2/7 VOUT, 3 VIN1, 4 PR1, 5 MODE, 6 VIN2, 8 ST (open drain, unused). Priority mode
+    # (MODE on VIN1): VIN1 (USB) while PR1 is above VREF (1 V), else VIN2 (host). Break-before-make, so the host
+    # never feeds the jack and USB never feeds the host's 5VOUT.
+    "U8": {1: "GND", 2: "+5V_SW", 3: "USB_SW", 4: "PR1", 5: "USB_SW", 6: "U1_OUT", 7: "+5V_SW", 8: None},
+    "R27": {1: "USB_SW", 2: "PR1"}, "R28": {1: "PR1", 2: "GND"},
+    "C12": {1: "USB_SW", 2: "GND"},
+    # USB-C input: VBUS -> TVS, 1 uF -> U6 -> USB_SW -> the mux. U6 shares U1's EN (host 5V on and not
     # switched off). Its FAULT pin is left open: the FAULT LED watches the host path (U1) only
     "J13": {"A1": "GND", "B1": "GND", "A12": "GND", "B12": "GND", "SH": "GND",
             "A4": "VBUS", "B4": "VBUS", "A9": "VBUS", "B9": "VBUS", "A5": "CC1", "B5": "CC2",
@@ -214,11 +229,12 @@ NETS = {
     "R22": {1: "CC1", 2: "GND"}, "R23": {1: "CC2", 2: "GND"},
     "D4": {1: "VBUS", 2: "GND"},            # Device:D_Zener pin 1 = K
     "C11": {1: "VBUS", 2: "GND"},
-    "U6": {1: "VBUS", 2: "GND", 3: "EN", 4: None, 5: "ILIM2", 6: "+5V_SW"},
+    "U6": {1: "VBUS", 2: "GND", 3: "EN", 4: None, 5: "ILIM2", 6: "USB_SW"},
     "R24": {1: "ILIM2", 2: "GND"},
     # EN: R15 holds it high (on whenever 5VOUT is); Q3 pulls it low when G7 drives its gate through JP9. R16 keeps
     # Q3 off when JP9 is open or G7 floats, and holds the gate below Q3's threshold against the Pi's default pull-up on
-    # G7 (about 50k: 3.3 V x 10k / 60k = 0.55 V, under the BSS138's 0.85 V minimum V_GS(th)). G = 1, S = 2, D = 3.
+    # G7 (about 50k: 3.3 V x 4.7k / 54.7k = 0.28 V. The BSS138's V_GS(th) is 0.85 V minimum, but that is at 1 mA,
+    # and EN's 100k pull-up needs only about 40 uA to be pulled low, so the margin has to be wide). G = 1, S = 2, D = 3.
     "R15": {1: "+5V", 2: "EN"},
     "Q3": {1: "PWR_OFF", 2: "GND", 3: "EN"},
     "R16": {1: "PWR_OFF", 2: "GND"},
@@ -259,8 +275,10 @@ NETS = {
     # UART: 4.7k series resistors limit current into or out of an unpowered or 5 V device to < 0.6 mA
     "R10": {1: "TX_HOST", 2: "TX"},
     "R11": {1: "RX_HOST", 2: "RX"},
-    # ESD protection for the UART socket, on the socket side of R10/R11 (flow-through: 6 -> 1 TX, 4 -> 3 RX)
-    "U5": {1: "TX", 2: "GND", 3: "RX", 4: "RX", 5: "+3V3", 6: "TX"},
+    # ESD protection for the UART socket, on the socket side of R10/R11 (flow-through: 6 -> 1 TX, 4 -> 3 RX). Its
+    # rail pin (5) is left open: on 3.3 V, its upper diodes would clamp a 5 V device's TX straight into the rail,
+    # with no resistor in the way, and lift it. Open, the array still clamps ESD through its own TVS.
+    "U5": {1: "TX", 2: "GND", 3: "RX", 4: "RX", 5: None, 6: "TX"},
     # SPI buffer, 74LVC125: 1OE/2OE/3OE tied low (always on), so SCK, MOSI and CS follow the host while the cap is
     # powered; 4OE is CS itself, so MISO only drives the host's G9 while the socket's device is selected. Unpowered,
     # Ioff leaves both sides floating: the display's bus doesn't see the socket.
@@ -283,7 +301,7 @@ NETS = {
     # divider pads (unfitted): with R5-R8 = 1k, a 1.8k here scales 0-5 V to 0-3.2 V
     "R17": {1: "AIN0", 2: "GND"}, "R18": {1: "AIN1", 2: "GND"}, "R19": {1: "AIN2", 2: "GND"},
     "R20": {1: "AIN3", 2: "GND"},
-    "TP1": {1: "+5V"}, "TP2": {1: "+5V_SW"},
+    "TP1": {1: "+5V"}, "TP2": {1: "USB_SW"},
 }
 
 POWER_NETS = ("+5V", "+3V3", "GND")   # these use KiCad power symbols; everything else is a local label

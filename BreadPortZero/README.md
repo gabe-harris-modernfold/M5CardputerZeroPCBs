@@ -5,11 +5,11 @@ A cap for the M5Stack CardputerZero's top expansion port that adds:
 - an SPI socket (SPI0, chip select CE1), buffered;
 - a UART socket;
 - four analog inputs, from an on-board ADS1115 ADC, with unfitted divider pads for 5 V signals;
-- a USB-C jack for extra power: about 1 A at 3.3 V instead of about 250 mA from the host.
+- a USB-C jack for extra power: about 1 A at 3.3 V instead of about 220 mA from the host.
 
 The host is protected in five ways:
 - a current-limited power switch (234-303 mA), with a FAULT LED that lights while it limits, and a second one
-  (1.09-1.26 A) on the USB input; neither source can back-feed the other;
+  (1.09-1.26 A) on the USB input; a power mux connects only one source at a time, so neither can back-feed the other;
 - an I2C isolator with ESD protection;
 - an SPI buffer that keeps breadboard wiring off the display's bus and drops off it when the cap is unpowered;
 - ESD protection on the SPI and UART lines, series resistors on the UART, series resistors and filter capacitors on
@@ -56,7 +56,7 @@ high, so JP9 and SPI exclude each other: with JP9 bridged, keep the SPI driver o
 The SPI socket is SPI0's CE1 (`/dev/spidev0.1`, if the host's image creates it alongside the display on CE0). Its
 pins, left to right: GND, 3V3, SCK, MOSI, CS, MISO.
 
-For more than about 250 mA at 3.3 V, plug a USB-C charger into the jack on the right end (power only; up to about 1 A
+For more than about 220 mA at 3.3 V, plug a USB-C charger into the jack on the right end (power only; up to about 1 A
 at 3.3 V). ExtPort 5 V must still be on.
 
 The other jumpers are listed in [SPEC.md](SPEC.md#solder-jumpers).
@@ -66,7 +66,7 @@ The other jumpers are listed in [SPEC.md](SPEC.md#solder-jumpers).
 | File | What it is |
 | --- | --- |
 | `BreadPortZero.kicad_pro`, `.kicad_sch`, `.kicad_pcb` | KiCad 10 project (generated; open and edit as usual) |
-| `BreadPortZero.kicad_sym`, `sym-lib-table` | Project symbol library (TPS2553, TLV62569, 74LVC125: KiCad doesn't ship them in this form) |
+| `BreadPortZero.kicad_sym`, `sym-lib-table` | Project symbol library (TPS2553, TPS2116, TLV62569, 74LVC125: KiCad doesn't ship them in this form) |
 | `BreadPortZero.pretty`, `fp-lib-table` | Project footprint library: the USB-C jack's KiCad footprint with fab-rule fixes |
 | `tools/design.py` | Board size, pin maps, socket positions, parts and nets: the single source for both generators |
 | `tools/gen_schematic.py` | Writes the schematic from `design.py` |
@@ -97,6 +97,13 @@ Then check it:
 ```
 
 Regenerating overwrites hand edits to the schematic and PCB. Once you start editing in KiCad, stop using the generators.
+
+The pictures in `docs/` are KiCad renders. `--side bottom` gives the bottom view; the 3D view is 952 high with
+`--perspective --rotate "-45,0,20" --zoom 1.45`:
+
+```powershell
+& "$env:LOCALAPPDATA\Programs\KiCad\10.0\bin\kicad-cli.exe" pcb render --side top -w 1736 -h 504 --quality high --floor --zoom 1.9 -o docs\board-top.png BreadPortZero.kicad_pcb
+```
 
 Fab output comes from the `gerber-check` MCP server's `export_for_fab` tool (profile `jlcpcb_standard` or
 `pcbway_standard`), which writes to `fab/<profile>/`.
