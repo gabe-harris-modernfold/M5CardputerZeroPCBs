@@ -1731,10 +1731,12 @@ def find_kicad_cli():
     w = shutil.which("kicad-cli")
     if w:
         return w
+    roots = [Path(r"C:\Program Files\KiCad"), Path(os.environ.get("LOCALAPPDATA", "")) / "Programs" / "KiCad"]
     for v in ("10.0", "9.0", "8.0"):
-        p = Path(rf"C:\Program Files\KiCad\{v}\bin\kicad-cli.exe")
-        if p.exists():
-            return str(p)
+        for root in roots:   # all-users install, then the per-user install winget makes
+            p = root / v / "bin" / "kicad-cli.exe"
+            if p.exists():
+                return str(p)
     return None
 
 
